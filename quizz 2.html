@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style 2.css">
+    <style>
+        #video-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+        #show-video-btn {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<div id="animation-fin"></div>
+<div id="animation-fin" style="display: none;"></div>
+
+<body>
+    <audio id="bg-audio" src="Reverse Situation.flac" loop></audio>
+
+    <div>
+        <img src="otaku.png" alt="image manga">
+        <h1>Bienvenue dans notre Univers Otakus!</h1>
+    </div>
+
+    <div class="quiz-container">
+        <button id="demarrer">Démarrer le Quizz</button>
+        <h2>Qui est l'auteur de cette citation?</h2>
+        <div id="question"></div>
+        <div id="choix"></div>
+
+        <img id="image-question" src="" alt="Illustration" style="display: none; width: 200px; height: auto;">
+
+        <!-- Bouton pour afficher la vidéo -->
+        <button id="show-video-btn" style="display: none;">Voir la vidéo</button>
+
+        <!-- Conteneur vidéo -->
+        <div id="video-container" style="display: none;">
+            <video id="question-video" width="600" controls>
+                <source id="video-source" src="" type="video/mp4">
+                Votre navigateur ne supporte pas la vidéo.
+            </video>
+        </div>
+
+        <div class="bouttons">
+            <button id="precedent" style="display: none;">Précédent</button>
+            <button id="suivant"  style="display: none;">Suivant</button>
+        </div>
+
+        <p id="score"></p>
+    </div>
+
+    <button id="rejouer" style="display:none;">Rejouer</button>
+    <div id="animation-fin" style="display: none;"></div>
+
+    <script src="javascript1.js"></script>
+</body>
+</html>
