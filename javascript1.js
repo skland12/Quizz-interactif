@@ -6,14 +6,16 @@ const questions = [
     { q: "“Je crois qu'on a tous besoin d'une obsession...”", c: ["Eren Jäger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
 ];
 
-let i = 0, score = 0, answers = new Array(questions.length).fill(null);
+let i = 0, score = 0;
+const answers = new Array(questions.length).fill(null);
+const videoAttempts = new Array(questions.length).fill(0);
+
 const get = id => document.getElementById(id);
-const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVideo, showVideoBtn, bgAudio] =
-    ["question", "choix", "image-question", "score", "precedent", "suivant", "rejouer", "demarrer", "video-container", "question-video", "show-video-btn", "bg-audio"]
+const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVideo, showVideoBtn, bgAudio, attemptsRemaining] =
+    ["question", "choix", "image-question", "score", "precedent", "suivant", "rejouer", "demarrer", "video-container", "question-video", "show-video-btn", "bg-audio", "video-attempts-remaining"]
     .map(get);
 
 function loadQ() {
-    // Stopper et réinitialiser la vidéo précédente
     if (!questionVideo.paused) {
         questionVideo.pause();
         questionVideo.currentTime = 0;
@@ -27,15 +29,18 @@ function loadQ() {
     prev.style.display = i ? "inline-block" : "none";
     next.style.display = answers[i] ? "inline-block" : "none";
 
-    // Gérer la vidéo
     if (q.video) {
         showVideoBtn.style.display = "inline-block";
+        showVideoBtn.disabled = videoAttempts[i] >= 2;
+        attemptsRemaining.textContent = `(${2 - videoAttempts[i]} restantes)`;
+        attemptsRemaining.style.display = "inline";
         questionVideo.src = q.video;
         videoContainer.style.display = "none";
     } else {
         showVideoBtn.style.display = "none";
-        videoContainer.style.display = "none";
+        attemptsRemaining.style.display = "none";
         questionVideo.src = "";
+        videoContainer.style.display = "none";
     }
 
     [...chx.children].forEach(btn => {
@@ -76,76 +81,13 @@ function showScore() {
     questionVideo.pause();
     questionVideo.currentTime = 0;
     bgAudio.volume = 1;
-}
-
-function reset() {
-        i = score = 0;
-        answers.fill(null);
-        replay.style.display = "none";
-        sc.textContent = "";
-        questionVideo.pause();
-        questionVideo.currentTime = 0;
-        videoContainer.style.display = "none";
-        showVideoBtn.style.display = "none";
-        bgAudio.volume = 1;
-        loadQ();
-    
-        // 👉 Masquer et vider l'animation de fin
-        const anim = document.getElementById("animation-fin");
-        anim.style.display = "none";
-        anim.innerHTML = "";
-        
-    }
-    
-
-// ▶️ Bouton "Voir la vidéo"
-showVideoBtn.addEventListener("click", () => {
-    videoContainer.style.display = "block";
-    questionVideo.play().catch(e => console.warn("Lecture vidéo bloquée :", e));
-});
-
-// 🔊 Compression audio quand la vidéo joue
-questionVideo.onplay = () => {
-    bgAudio.volume = 0.2;
-};
-
-questionVideo.onended = () => {
-    bgAudio.volume = 1;
-};
-
-// ▶️ Démarrage
-window.addEventListener("DOMContentLoaded", () => {
-    start.addEventListener("click", () => {
-        start.style.display = "none";
-        next.addEventListener("click", () => move(1));
-        prev.addEventListener("click", () => move(-1));
-        bgAudio.play().catch(e => console.warn("Audio bloqué :", e));
-        loadQ();
-    });
-
-    replay.addEventListener("click", reset);
-});
-function showScore() {
-    qz.textContent = "Quiz terminé !";
-    chx.innerHTML = "";
-    img.style.display = "none";
-    prev.style.display = next.style.display = "none";
-    sc.textContent = `Score final : ${score} / ${questions.length}`;
-    replay.style.display = "inline-block";
-    videoContainer.style.display = "none";
-    questionVideo.pause();
-    questionVideo.currentTime = 0;
-    bgAudio.volume = 1;
     showVideoBtn.style.display = "none";
-    sc.textContent = `Score final : ${score} / ${questions.length}`;
+    attemptsRemaining.style.display = "none";
 
-
-    // Animation de fin
     const anim = document.getElementById("animation-fin");
-    anim.innerHTML = ""; // Nettoyer l'ancien contenu
+    anim.innerHTML = "";
 
     if (score >= 3) {
-        // 🎉 Confettis
         for (let i = 0; i < 50; i++) {
             const confetti = document.createElement("div");
             confetti.className = "confetti";
@@ -154,7 +96,6 @@ function showScore() {
             anim.appendChild(confetti);
         }
     } else {
-        // 😭 Emoji triste
         const sadEmoji = document.createElement("div");
         sadEmoji.className = "sad-emoji";
         sadEmoji.textContent = "😭";
@@ -163,3 +104,63 @@ function showScore() {
 
     anim.style.display = "block";
 }
+
+function reset() {
+    i = score = 0;
+    answers.fill(null);
+    videoAttempts.fill(0);
+    questions.sort(() => Math.random() - 0.5);
+
+    replay.style.display = "none";
+    sc.textContent = "";
+    questionVideo.pause();
+    questionVideo.currentTime = 0;
+    videoContainer.style.display = "none";
+    showVideoBtn.style.display = "none";
+    attemptsRemaining.textContent = "";
+    attemptsRemaining.style.display = "none";
+    bgAudio.volume = 1;
+
+    const anim = document.getElementById("animation-fin");
+    anim.style.display = "none";
+    anim.innerHTML = "";
+
+    loadQ();
+}
+
+showVideoBtn.addEventListener("click", () => {
+    if (videoAttempts[i] >= 2) {
+        alert("Tu as déjà regardé la vidéo 2 fois.");
+        showVideoBtn.disabled = true;
+        attemptsRemaining.textContent = `(0 restantes)`;
+        return;
+    }
+    videoAttempts[i]++;
+    if (videoAttempts[i] >= 2) {
+        showVideoBtn.disabled = true;
+    }
+    attemptsRemaining.textContent = `(${2 - videoAttempts[i]} restantes)`;
+
+    videoContainer.style.display = "block";
+    questionVideo.play().catch(e => console.warn("Lecture vidéo bloquée :", e));
+});
+
+questionVideo.onplay = () => {
+    bgAudio.volume = 0.2;
+};
+
+questionVideo.onended = () => {
+    bgAudio.volume = 1;
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+    start.addEventListener("click", () => {
+        start.style.display = "none";
+        next.addEventListener("click", () => move(1));
+        prev.addEventListener("click", () => move(-1));
+        bgAudio.play().catch(e => console.warn("Audio bloqué :", e));
+        reset();
+    });
+
+    replay.addEventListener("click", reset);
+});
