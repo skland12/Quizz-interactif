@@ -4,103 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
+    <link rel="stylesheet" href="style 2.css">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f9f9f9;
-        }
-
-        .quiz-container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        h1, h2 {
-            color: #333;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 10px 5px;
-            font-size: 1em;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #444;
-            color: white;
-        }
-
-        button:hover {
-            background-color: #222;
-        }
-
-        #image-question {
-            display: none;
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            margin: 10px auto;
-        }
-
         #video-container {
             margin-top: 10px;
             text-align: center;
         }
 
-        video {
-            width: 100%;
-            height: auto;
+        #show-video-btn {
+            margin: 10px 0;
         }
 
-        @media screen and (max-width: 600px) {
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
             .quiz-container {
+                width: 100%;
                 padding: 10px;
             }
 
             button {
                 width: 100%;
-                margin: 10px 0;
+                margin: 5px 0;
+                font-size: 1rem;
+            }
+
+            #image-question {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
             }
 
             video {
                 width: 100%;
+                height: auto;
+            }
+
+            h1, h2 {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
+
 <body>
     <audio id="bg-audio" src="Reverse Situation.mp3" loop></audio>
 
-    <div class="quiz-container">
+    <div>
         <img src="otaku.png" alt="image manga">
         <h1>Bienvenue dans notre Univers Otakus!</h1>
+    </div>
 
+    <div class="quiz-container">
         <button id="demarrer">Démarrer le Quizz</button>
         <h2>Qui est l'auteur de cette citation?</h2>
         <div id="question"></div>
         <div id="choix"></div>
 
-        <img id="image-question" src="" alt="Illustration">
+        <img id="image-question" src="" alt="Illustration" style="display: none; width: 200px; height: auto;">
 
         <!-- Bouton pour afficher la vidéo -->
         <button id="show-video-btn" style="display: none;">Voir la vidéo</button>
 
         <!-- Conteneur vidéo -->
         <div id="video-container" style="display: none;">
-            <video id="question-video" controls>
+            <video id="question-video" width="600" controls>
                 <source id="video-source" src="" type="video/mp4">
                 Votre navigateur ne supporte pas la vidéo.
             </video>
@@ -112,8 +83,9 @@
         </div>
 
         <p id="score"></p>
-        <button id="rejouer" style="display:none;">Rejouer</button>
     </div>
+
+    <button id="rejouer" style="display:none;">Rejouer</button>
 
     <script src="javascript1.js"></script>
 </body>
