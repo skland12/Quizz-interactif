@@ -1,5 +1,5 @@
 const questions = [
-    { q: "“Personne n'a le droit de nous juger avant la fin...”", c: ["Naruto Uzumaki", "Kakashi Hatake", "Itachi Uchiwa"], r:"Itachi Uchiwa", img: "Itachi.jpeg", video: "Itachi.mp4" },
+    { q: "“Personne n'a le droit de nous juger avant la fin parce que l'homme est capable du pire comme du meilleur jusqu'au bout.”", c: ["Naruto Uzumaki", "Kakashi Hatake", "Itachi Uchiwa"], r:"Itachi Uchiwa", img: "Itachi.jpeg", video: "Itachi.mp4" },
     { q: "“Dans ce monde, il n'y a que le talent pur qui compte...”", c: ["Taiga Kagami", "Kôjiro Hyuga", "Shoei Baro"], r: "Taiga Kagami", img: "Kagami.jpg", video: "Kagami.mp4" },
     { q: "“Quand un homme est blessé, il découvre la haine...”", c: ["Pain", "Obito Uchiha", "Jiraya"], r: "Jiraya", img: "Jiraya.jpeg", video: "Jiraya.mp4" },
     { q: "“Tu es convaincu que je ne fais que mentir...”", c: ["Sôsuke Aizen", "Griffith", "Kibtsuji Muzan"], r: "Sôsuke Aizen", img: "Aizen.jpg", video: "Aizen.mp4" },
