@@ -12,7 +12,6 @@ const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVide
   ["question", "choix", "image-question", "score", "precedent", "suivant", "rejouer", "demarrer", "video-container", "question-video", "show-video-btn", "bg-audio"]
   .map(get);
 
-// Fonction pour mélanger les questions
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -107,7 +106,7 @@ function showScore() {
 
 function reset() {
   i = score = 0;
-  shuffle(questions); // Mélanger les questions au redémarrage
+  shuffle(questions);
   answers = new Array(questions.length).fill(null);
   replay.style.display = "none";
   sc.textContent = "";
@@ -137,10 +136,16 @@ questionVideo.onended = () => {
   bgAudio.volume = 1;
 };
 
+// *** Initial hiding of video elements before start ***
 window.addEventListener("DOMContentLoaded", () => {
+  videoContainer.style.display = "none";      // ***
+  questionVideo.pause();                      // ***
+  questionVideo.currentTime = 0;              // ***
+  showVideoBtn.style.display = "none";        // ***
+
   start.addEventListener("click", () => {
     start.style.display = "none";
-    shuffle(questions); // Mélange initial
+    shuffle(questions);
     next.addEventListener("click", () => move(1));
     prev.addEventListener("click", () => move(-1));
     bgAudio.play().catch(e => console.warn("Audio bloqué :", e));
