@@ -6,13 +6,15 @@ const questions = [
     { q: "“Je crois qu'on a tous besoin d'une obsession...”", c: ["Eren Jäger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
 ];
 
-let i = 0, score = 0;
-const answers = new Array(questions.length).fill(null);
-let globalVideoAttempts = 0;
+// Mélanger les questions
+questions.sort(() => Math.random() - 0.5);
+
+let i = 0, score = 0, answers = new Array(questions.length).fill(null);
+let videoAttempts = 2;
 
 const get = id => document.getElementById(id);
 const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVideo, showVideoBtn, bgAudio, attemptsRemaining] =
-    ["question", "choix", "image-question", "score", "precedent", "suivant", "rejouer", "demarrer", "video-container", "question-video", "show-video-btn", "bg-audio", "video-attempts-remaining"]
+    ["question", "choix", "image-question", "score", "precedent", "suivant", "rejouer", "demarrer", "video-container", "question-video", "show-video-btn", "bg-audio", "attempts-remaining"]
     .map(get);
 
 function loadQ() {
@@ -29,18 +31,18 @@ function loadQ() {
     prev.style.display = i ? "inline-block" : "none";
     next.style.display = answers[i] ? "inline-block" : "none";
 
-    if (q.video) {
+    // Gérer la vidéo
+    if (q.video && videoAttempts > 0) {
         showVideoBtn.style.display = "inline-block";
-        showVideoBtn.disabled = globalVideoAttempts >= 2;
-        attemptsRemaining.textContent = `(${2 - globalVideoAttempts} restantes)`;
-        attemptsRemaining.style.display = "inline";
+        attemptsRemaining.textContent = `(${videoAttempts} restantes)`;
+        attemptsRemaining.style.display = "inline-block";
         questionVideo.src = q.video;
         videoContainer.style.display = "none";
     } else {
         showVideoBtn.style.display = "none";
         attemptsRemaining.style.display = "none";
-        questionVideo.src = "";
         videoContainer.style.display = "none";
+        questionVideo.src = "";
     }
 
     [...chx.children].forEach(btn => {
@@ -107,44 +109,34 @@ function showScore() {
 
 function reset() {
     i = score = 0;
-    globalVideoAttempts = 0;
+    videoAttempts = 2;
     answers.fill(null);
-    questions.sort(() => Math.random() - 0.5);
-
     replay.style.display = "none";
     sc.textContent = "";
     questionVideo.pause();
     questionVideo.currentTime = 0;
     videoContainer.style.display = "none";
     showVideoBtn.style.display = "none";
-    attemptsRemaining.textContent = "";
     attemptsRemaining.style.display = "none";
     bgAudio.volume = 1;
-
     const anim = document.getElementById("animation-fin");
     anim.style.display = "none";
     anim.innerHTML = "";
-
     loadQ();
 }
 
+// ▶️ Bouton "Voir la vidéo"
 showVideoBtn.addEventListener("click", () => {
-    if (globalVideoAttempts >= 2) {
-        alert("Tu as déjà utilisé tes 2 visionnages autorisés.");
-        showVideoBtn.disabled = true;
-        attemptsRemaining.textContent = `(0 restantes)`;
-        return;
+    if (videoAttempts > 0) {
+        videoContainer.style.display = "block";
+        questionVideo.play().catch(e => console.warn("Lecture vidéo bloquée :", e));
+        videoAttempts--;
+        attemptsRemaining.textContent = `(${videoAttempts} restantes)`;
+        if (videoAttempts === 0) {
+            showVideoBtn.style.display = "none";
+            attemptsRemaining.style.display = "none";
+        }
     }
-
-    globalVideoAttempts++;
-    if (globalVideoAttempts >= 2) {
-        showVideoBtn.disabled = true;
-    }
-
-    attemptsRemaining.textContent = `(${2 - globalVideoAttempts} restantes)`;
-
-    videoContainer.style.display = "block";
-    questionVideo.play().catch(e => console.warn("Lecture vidéo bloquée :", e));
 });
 
 questionVideo.onplay = () => {
@@ -155,9 +147,12 @@ questionVideo.onended = () => {
     bgAudio.volume = 1;
 };
 
+// ▶️ Démarrage
 window.addEventListener("DOMContentLoaded", () => {
     start.addEventListener("click", () => {
         start.style.display = "none";
+        showVideoBtn.style.display = "none";
+        attemptsRemaining.style.display = "none";
         next.addEventListener("click", () => move(1));
         prev.addEventListener("click", () => move(-1));
         bgAudio.play().catch(e => console.warn("Audio bloqué :", e));
