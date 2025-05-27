@@ -1,7 +1,7 @@
 const questions = [
   { q: "“Personne n'a le droit de nous juger avant la fin parce que l'homme est capable du pire comme du meilleur jusqu'au bout.”", c: ["Naruto Uzumaki", "Kakashi Hatake", "Itachi Uchiwa"], r:"Itachi Uchiwa", img: "Itachi.jpeg", video: "Itachi.mp4" },
   { q: "“Dans ce monde, il n'y a que le talent pur qui prime, le reste ne compte pas.”", c: ["Taiga Kagami", "Kôjiro Hyuga", "Shoei Baro"], r: "Taiga Kagami", img: "Kagami.jpg", video: "Kagami.mp4" },
-  { q: "“Quand un homme est blessé, il découvre la haine, quand il blesse quelqu'un, il découvre la haine ainsi que la culpabilité des victimes.”", c: ["Pain", "Obito Uchiha", "Jiraya"], r: "Jiraya", img: "Jiraya.jpeg", video: "Jiraya.mp4" },
+  { q: "“Quand un homme est blessé, il découvre la haine, quand il blesse quelqu'un, il découvre la haine ainsi que la rancoeur des victimes.”", c: ["Pain", "Obito Uchiha", "Jiraya"], r: "Jiraya", img: "Jiraya.jpeg", video: "Jiraya.mp4" },
   { q: "“La vérité ou le mensonge n'existe pas dans ce monde. A mon avis seuls comptent les faits irréfutables, les faits les plus brutes.”", c: ["Sôsuke Aizen", "Ayanokoji", "Kibtsuji Muzan"], r: "Sôsuke Aizen", img: "Aizen.jpg", video: "Aizen.mp4" },
   { q: "“Je crois qu'on a tous besoin d'une obsession pour tenir le coup. C'est ce qui nous donne la force de continuer à avancer.”", c: ["Eren Jägger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
 ];
