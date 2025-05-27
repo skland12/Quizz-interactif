@@ -3,7 +3,7 @@ const questions = [
   { q: "“Dans ce monde, il n'y a que le talent pur qui compte...”", c: ["Taiga Kagami", "Kôjiro Hyuga", "Shoei Baro"], r: "Taiga Kagami", img: "Kagami.jpg", video: "Kagami.mp4" },
   { q: "“Quand un homme est blessé, il découvre la haine, quand il blesse quelqu'un, il découvre la haine ainsi que la culpabilité des victimes.”", c: ["Pain", "Obito Uchiha", "Jiraya"], r: "Jiraya", img: "Jiraya.jpeg", video: "Jiraya.mp4" },
   { q: "“Tu es convaincu que je ne fais que mentir...”", c: ["Sôsuke Aizen", "Griffith", "Kibtsuji Muzan"], r: "Sôsuke Aizen", img: "Aizen.jpg", video: "Aizen.mp4" },
-  { q: "“Je crois qu'on a tous besoin d'une obsession pour tenir le coup. C'est ce qui nous donne la force de continuer à avancer.”", c: ["Eren Jäger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
+  { q: "“Je crois qu'on a tous besoin d'une obsession pour tenir le coup. C'est ce qui nous donne la force de continuer à avancer.”", c: ["Eren Jägger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
 ];
 
 
