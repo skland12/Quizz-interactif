@@ -8,7 +8,7 @@ const questions = [
 
 let i = 0, score = 0;
 const answers = new Array(questions.length).fill(null);
-const videoAttempts = new Array(questions.length).fill(0);
+let globalVideoAttempts = 0;
 
 const get = id => document.getElementById(id);
 const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVideo, showVideoBtn, bgAudio, attemptsRemaining] =
@@ -31,8 +31,8 @@ function loadQ() {
 
     if (q.video) {
         showVideoBtn.style.display = "inline-block";
-        showVideoBtn.disabled = videoAttempts[i] >= 2;
-        attemptsRemaining.textContent = `(${2 - videoAttempts[i]} restantes)`;
+        showVideoBtn.disabled = globalVideoAttempts >= 2;
+        attemptsRemaining.textContent = `(${2 - globalVideoAttempts} restantes)`;
         attemptsRemaining.style.display = "inline";
         questionVideo.src = q.video;
         videoContainer.style.display = "none";
@@ -107,8 +107,8 @@ function showScore() {
 
 function reset() {
     i = score = 0;
+    globalVideoAttempts = 0;
     answers.fill(null);
-    videoAttempts.fill(0);
     questions.sort(() => Math.random() - 0.5);
 
     replay.style.display = "none";
@@ -129,17 +129,19 @@ function reset() {
 }
 
 showVideoBtn.addEventListener("click", () => {
-    if (videoAttempts[i] >= 2) {
-        alert("Tu as déjà regardé la vidéo 2 fois.");
+    if (globalVideoAttempts >= 2) {
+        alert("Tu as déjà utilisé tes 2 visionnages autorisés.");
         showVideoBtn.disabled = true;
         attemptsRemaining.textContent = `(0 restantes)`;
         return;
     }
-    videoAttempts[i]++;
-    if (videoAttempts[i] >= 2) {
+
+    globalVideoAttempts++;
+    if (globalVideoAttempts >= 2) {
         showVideoBtn.disabled = true;
     }
-    attemptsRemaining.textContent = `(${2 - videoAttempts[i]} restantes)`;
+
+    attemptsRemaining.textContent = `(${2 - globalVideoAttempts} restantes)`;
 
     videoContainer.style.display = "block";
     questionVideo.play().catch(e => console.warn("Lecture vidéo bloquée :", e));
