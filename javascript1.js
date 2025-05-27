@@ -6,6 +6,7 @@ const questions = [
   { q: "“Je crois qu'on a tous besoin d'une obsession pour tenir le coup. C'est ce qui nous donne la force de continuer à avancer.”", c: ["Eren Jäger", "Kenny Ackerman", "Livai Ackerman"], r: "Kenny Ackerman", img: "Kenny.jpg", video: "Kenny.mp4" }
 ];
 
+
 let i = 0, score = 0, answers = new Array(questions.length).fill(null);
 const get = id => document.getElementById(id);
 const [qz, chx, img, sc, prev, next, replay, start, videoContainer, questionVideo, showVideoBtn, bgAudio] =
